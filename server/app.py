@@ -115,3 +115,9 @@ def grader(req: GraderRequest):
         "exec_error": result["exec_result"]["exec_error"],
         "quality": result["quality"],
     }
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+if __name__ == "__main__":
+    main()
