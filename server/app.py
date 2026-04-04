@@ -47,6 +47,17 @@ class GraderRequest(BaseModel):
 # ─────────────────────────────────────────────
 # Endpoints
 # ─────────────────────────────────────────────
+@app.get("/")
+def root():
+    return {
+        "name": "CodeReviewEnv",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health",
+        "tasks": "/tasks"
+    }
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
