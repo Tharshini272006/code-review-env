@@ -1,3 +1,14 @@
+---
+title: Code Review Env
+emoji: 🔍
+colorFrom: purple
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
+# Code Review Env
 # CodeReviewEnv 🐛→✅
 
 **OpenEnv RL environment** — An AI agent receives a Python function containing a deliberate bug, analyzes it, and submits a fixed version. The environment executes the fix against hidden test cases and returns partial rewards at every step.
