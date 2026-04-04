@@ -69,9 +69,10 @@ def tasks():
 
 
 @app.post("/reset", response_model=Observation)
-def reset(req: ResetRequest):
+def reset(req: Optional[ResetRequest] = None):
     try:
-        obs = env.reset(task_id=req.task_id)
+        task_id = req.task_id if req else "easy"
+        obs = env.reset(task_id=task_id)
         return obs
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
