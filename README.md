@@ -91,3 +91,23 @@ An AI agent receives a buggy Python function, identifies the bug, and submits a 
 ---
 
 ## Inference Output Format
+
+[START] task=easy env=code_review_env model=Qwen/Qwen2.5-72B-Instruct
+[STEP] step=1 action=def average... reward=1.00 done=true error=null
+[END] success=true steps=1 score=1.000 rewards=1.00
+
+---
+
+## Setup & Run
+```bash
+# Install deps
+pip install -r requirements.txt
+pip install -r server/requirements.txt
+
+# Start server
+python -m uvicorn server.app:app --host 0.0.0.0 --port 7860
+
+# Run inference
+export HF_TOKEN=hf_...
+python inference.py
+```
