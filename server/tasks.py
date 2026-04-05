@@ -215,30 +215,65 @@ def binary_search(arr, target):
     function_name="binary_search",
     max_attempts=5,
     test_cases=[
-        TestCase(args=[[1,2,3,4,5], 3], kwargs={}, expected=2,
-                 description="find 3 in [1,2,3,4,5]"),
-        TestCase(args=[[1,2,3,4,5], 6], kwargs={}, expected=-1,
-                 description="target not found"),
-        TestCase(args=[[], 1], kwargs={}, expected=-1,
-                 description="empty list"),
-        TestCase(args=[[1], 1], kwargs={}, expected=0,
-                 description="single element found"),
-        TestCase(args=[[1,3,5,7,9], 7], kwargs={}, expected=3,
-                 description="find 7 in odd list"),
+        TestCase(args=["alice"], kwargs={}, expected="alice",
+                 description="normal input unchanged"),
+        TestCase(args=["alice'"], kwargs={}, expected="alice",
+                 description="single quote removed"),
+        TestCase(args=["alice;"], kwargs={}, expected="alice",
+                 description="semicolon removed"),
+        TestCase(args=[None], kwargs={}, expected="",
+                 description="None returns empty string"),
+        TestCase(args=["test--"], kwargs={}, expected="test",
+                 description="SQL comment marker removed"),
     ],
     hint="Check the initial value of right — should it be len(arr) or len(arr)-1?",
     tags=["binary-search", "off-by-one", "hard"],
+)
+TASK_SECURITY = Task(
+    task_id="security",
+    name="security_fix",
+    description=(
+        "The function below is supposed to sanitize user input by removing "
+        "dangerous SQL characters, but it has a bug — it only removes single quotes "
+        "but misses other dangerous characters like semicolons and comments (--). "
+        "Fix it to properly sanitize ALL dangerous SQL characters and handle None input. "
+        "You have up to 3 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def sanitize_input(user_input):
+    """Remove dangerous SQL characters from user input."""
+    if user_input is None:
+        return ""
+    return user_input.replace("\'", "")   # BUG: misses ; -- and other chars
+''',
+    function_name="sanitize_input",
+    max_attempts=3,
+    test_cases=[
+        TestCase(args=["alice"], kwargs={}, expected="alice",
+                 description="normal input unchanged"),
+        TestCase(args=["alice'bobby"], kwargs={}, expected="alicebobby",
+                 description="single quote removed"),
+        TestCase(args=["alice;bobby"], kwargs={}, expected="alicebobby",
+                 description="semicolon removed"),
+        TestCase(args=[None], kwargs={}, expected="",
+                 description="None returns empty string"),
+        TestCase(args=["alice--bobby"], kwargs={}, expected="alicebobby",
+                 description="SQL comment removed"),
+    ],
+    hint="Remove all of: single quotes ('), semicolons (;), and SQL comments (--).",
+    tags=["security", "sanitization", "sql", "hard"],
 )
 
 # ─────────────────────────────────────────────
 # Registry
 # ─────────────────────────────────────────────
 TASKS: Dict[str, Task] = {
-    "easy":    TASK_EASY,
-    "medium":  TASK_MEDIUM,
-    "hard":    TASK_HARD,
-    "medium2": TASK_MEDIUM2,
-    "hard2":   TASK_HARD2,
+    "easy":     TASK_EASY,
+    "medium":   TASK_MEDIUM,
+    "hard":     TASK_HARD,
+    "medium2":  TASK_MEDIUM2,
+    "hard2":    TASK_HARD2,
+    "security": TASK_SECURITY,
 }
 
 
