@@ -2,6 +2,7 @@
 import ast
 import sys
 import io
+import builtins
 from typing import Any, Dict, List, Optional, Tuple
 from server.tasks import Task, TestCase
 
@@ -28,8 +29,6 @@ def _check_safety(code: str) -> Optional[str]:
                     return f"SecurityError: import of '{name}' is not allowed."
     return None
 
-
-
 def _run_with_timeout(fn, timeout_seconds: int = 5):
     try:
         result = fn()
@@ -48,15 +47,9 @@ def execute_code(code: str, function_name: str, test_cases: List[TestCase], time
         return {"executes": False, "exec_error": f"SyntaxError: {e}", "stdout": "",
                 "results": [], "tests_passed": 0, "total_tests": len(test_cases)}
 
-    raw = __builtins__
-    if isinstance(raw, dict):
-        safe_builtins = {k: v for k, v in raw.items()
-                         if k not in ("__import__", "open", "exec", "eval", "compile",
-                                      "input", "breakpoint", "quit", "exit")}
-    else:
-        safe_builtins = {k: getattr(raw, k) for k in dir(raw)
-                         if k not in ("__import__", "open", "exec", "eval", "compile",
-                                      "input", "breakpoint", "quit", "exit")}
+    safe_builtins = {k: getattr(builtins, k) for k in dir(builtins)
+                     if k not in ("__import__", "open", "exec", "eval",
+                                  "compile", "input", "breakpoint", "quit", "exit")}
 
     namespace: Dict[str, Any] = {"__builtins__": safe_builtins}
     captured_stdout = io.StringIO()
@@ -155,8 +148,8 @@ def compute_reward_medium(exec_result: Dict, attempt_number: int = 1) -> Tuple[f
     edge = results[2:] if len(results) > 2 else []
     basic_passed = sum(1 for r in basic if r["passed"])
     edge_passed = sum(1 for r in edge if r["passed"])
-    basic_reward = (basic_passed / len(basic)) * 0.30 if basic else 0.0
-    edge_reward = (edge_passed / len(edge)) * 0.30 if edge else 0.0
+    basic_reward = (basic_passed / len(basic)) * 0.40 if basic else 0.0
+    edge_reward = (edge_passed / len(edge)) * 0.40 if edge else 0.0
     reward += basic_reward + edge_reward
     breakdown.append(f"basic {basic_passed}/{len(basic)}(+{basic_reward:.2f})")
     breakdown.append(f"edge {edge_passed}/{len(edge)}(+{edge_reward:.2f})")
@@ -190,47 +183,60 @@ def compute_reward_hard(exec_result: Dict, quality: Dict, attempt_number: int = 
     return round(min(1.0, reward), 4), " | ".join(breakdown)
 
 def grade(task: Task, submitted_code: str, attempt_number: int = 1) -> Dict:
-    exec_result = execute_code(submitted_code, task.function_name, task.test_cases)
-    quality = None
-    if task.task_id == "easy":
-        reward, breakdown = compute_reward_easy(exec_result, attempt_number)
-    elif task.task_id == "medium":
-        reward, breakdown = compute_reward_medium(exec_result, attempt_number)
-    elif task.task_id == "hard":
-        quality = check_code_quality(submitted_code)
-        reward, breakdown = compute_reward_hard(exec_result, quality, attempt_number)
-    else:
-        reward, breakdown = 0.0, "Unknown task"
+    try:
+        exec_result = execute_code(submitted_code, task.function_name, task.test_cases)
+        quality = None
+        if task.task_id == "easy":
+            reward, breakdown = compute_reward_easy(exec_result, attempt_number)
+        elif task.task_id in ("medium", "medium2"):
+            reward, breakdown = compute_reward_medium(exec_result, attempt_number)
+        elif task.task_id in ("hard", "hard2"):
+            quality = check_code_quality(submitted_code)
+            reward, breakdown = compute_reward_hard(exec_result, quality, attempt_number)
+        else:
+            reward, breakdown = 0.0, "Unknown task"
 
-    if not exec_result["executes"]:
-        feedback = f"❌ Code failed to execute: {exec_result['exec_error']}"
-    else:
-        passed = exec_result["tests_passed"]
-        total = exec_result["total_tests"]
-        feedback_lines = [f"✅ Code executed. Tests passed: {passed}/{total}."]
-        for r in exec_result["results"]:
-            icon = "✅" if r["passed"] else "❌"
-            desc = r.get("description", "")
-            if r["passed"]:
-                feedback_lines.append(f"  {icon} {desc}")
-            else:
-                got = r.get("got")
-                exp = r.get("expected")
-                err = r.get("error")
-                if err:
-                    feedback_lines.append(f"  {icon} {desc}: Error — {err}")
+        if not exec_result["executes"]:
+            feedback = f"❌ Code failed to execute: {exec_result['exec_error']}"
+        else:
+            passed = exec_result["tests_passed"]
+            total = exec_result["total_tests"]
+            feedback_lines = [f"✅ Code executed. Tests passed: {passed}/{total}."]
+            for r in exec_result["results"]:
+                icon = "✅" if r["passed"] else "❌"
+                desc = r.get("description", "")
+                if r["passed"]:
+                    feedback_lines.append(f"  {icon} {desc}")
                 else:
-                    feedback_lines.append(f"  {icon} {desc}: expected {exp!r}, got {got!r}")
-        if quality:
-            feedback_lines.append(
-                f"Code quality: validation={quality['has_input_validation']}, "
-                f"no_magic={quality['no_magic_numbers']}, docstring={quality['has_docstring']}")
-        feedback = "\n".join(feedback_lines)
+                    got = r.get("got")
+                    exp = r.get("expected")
+                    err = r.get("error")
+                    if err:
+                        feedback_lines.append(f"  {icon} {desc}: Error — {err}")
+                    else:
+                        feedback_lines.append(f"  {icon} {desc}: expected {exp!r}, got {got!r}")
+            if quality:
+                feedback_lines.append(
+                    f"Code quality: validation={quality['has_input_validation']}, "
+                    f"no_magic={quality['no_magic_numbers']}, docstring={quality['has_docstring']}")
+            feedback = "\n".join(feedback_lines)
 
-    return {
-        "reward": reward,
-        "breakdown": breakdown,
-        "exec_result": exec_result,
-        "quality": quality,
-        "feedback": feedback,
-    }
+        return {
+            "reward": reward,
+            "breakdown": breakdown,
+            "exec_result": exec_result,
+            "quality": quality,
+            "feedback": feedback,
+        }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return {
+            "reward": 0.0,
+            "breakdown": f"grader exception: {e}",
+            "exec_result": {"executes": False, "exec_error": str(e),
+                           "stdout": "", "results": [],
+                           "tests_passed": 0, "total_tests": 0},
+            "quality": None,
+            "feedback": f"❌ Grader error: {e}",
+        }

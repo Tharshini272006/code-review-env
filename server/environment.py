@@ -54,6 +54,22 @@ class CodeReviewEnvironment:
 
         grade_result = grade(self._task, action.code, attempt_number=self._attempt)
 
+        if grade_result is None:
+            grade_result = {
+                "reward": 0.0,
+                "breakdown": "grader error",
+                "exec_result": {
+                    "executes": False,
+                    "exec_error": "grader returned None",
+                    "stdout": "",
+                    "results": [],
+                    "tests_passed": 0,
+                    "total_tests": 0,
+                },
+                "quality": None,
+                "feedback": "Grader error occurred.",
+            }
+
         reward = grade_result["reward"]
         feedback = grade_result["feedback"]
         exec_result = grade_result["exec_result"]

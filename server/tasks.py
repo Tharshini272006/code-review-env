@@ -149,14 +149,96 @@ def sieve_of_eratosthenes(n):
     ),
     tags=["sieve", "refactor", "validation", "hard"],
 )
+# ─────────────────────────────────────────────
+# TASK 4 — medium2 — string_fix
+# Bug: wrong slice step in string reversal
+# ─────────────────────────────────────────────
+TASK_MEDIUM2 = Task(
+    task_id="medium2",
+    name="string_fix",
+    description=(
+        "Fix the Python function below. It is supposed to reverse a string "
+        "but returns wrong output due to a logical bug. "
+        "You have up to 3 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def reverse_string(s):
+    """Return the reverse of a string."""
+    return s[::1]   # BUG: step should be -1, not 1
+''',
+    function_name="reverse_string",
+    max_attempts=3,
+    test_cases=[
+        TestCase(args=["hello"], kwargs={}, expected="olleh",
+                 description="reverse 'hello'"),
+        TestCase(args=[""], kwargs={}, expected="",
+                 description="empty string"),
+        TestCase(args=["a"], kwargs={}, expected="a",
+                 description="single character"),
+        TestCase(args=["abcde"], kwargs={}, expected="edcba",
+                 description="reverse 'abcde'"),
+        TestCase(args=["racecar"], kwargs={}, expected="racecar",
+                 description="palindrome"),
+    ],
+    hint="Check the slice step value — what does s[::1] do vs s[::-1]?",
+    tags=["string", "slice", "medium"],
+)
+
+# ─────────────────────────────────────────────
+# TASK 5 — hard2 — binary_search_fix
+# Bug: off-by-one + no validation + magic numbers
+# ─────────────────────────────────────────────
+TASK_HARD2 = Task(
+    task_id="hard2",
+    name="binary_search_fix",
+    description=(
+        "Fix the Python function below. It is supposed to perform binary search "
+        "and return the index of target in a sorted list, or -1 if not found. "
+        "It has a bug AND poor code quality. "
+        "Fix the bug AND add input validation. "
+        "You have up to 5 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def binary_search(arr, target):
+    """Return index of target in sorted arr, or -1 if not found."""
+    left, right = 0, len(arr)    # BUG: should be len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+''',
+    function_name="binary_search",
+    max_attempts=5,
+    test_cases=[
+        TestCase(args=[[1,2,3,4,5], 3], kwargs={}, expected=2,
+                 description="find 3 in [1,2,3,4,5]"),
+        TestCase(args=[[1,2,3,4,5], 6], kwargs={}, expected=-1,
+                 description="target not found"),
+        TestCase(args=[[], 1], kwargs={}, expected=-1,
+                 description="empty list"),
+        TestCase(args=[[1], 1], kwargs={}, expected=0,
+                 description="single element found"),
+        TestCase(args=[[1,3,5,7,9], 7], kwargs={}, expected=3,
+                 description="find 7 in odd list"),
+    ],
+    hint="Check the initial value of right — should it be len(arr) or len(arr)-1?",
+    tags=["binary-search", "off-by-one", "hard"],
+)
 
 # ─────────────────────────────────────────────
 # Registry
 # ─────────────────────────────────────────────
 TASKS: Dict[str, Task] = {
-    "easy":   TASK_EASY,
-    "medium": TASK_MEDIUM,
-    "hard":   TASK_HARD,
+    "easy":    TASK_EASY,
+    "medium":  TASK_MEDIUM,
+    "hard":    TASK_HARD,
+    "medium2": TASK_MEDIUM2,
+    "hard2":   TASK_HARD2,
 }
 
 
