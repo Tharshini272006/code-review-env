@@ -62,6 +62,47 @@ def root():
 def health():
     return {"status": "ok"}
 
+@app.get("/metrics")
+def metrics():
+    """Environment metrics and statistics."""
+    return {
+        "environment": "code_review_env",
+        "version": "1.0.0",
+        "tasks": {
+            "total": 6,
+            "by_difficulty": {
+                "easy": ["easy"],
+                "medium": ["medium", "medium2"],
+                "hard": ["hard", "hard2", "security"]
+            }
+        },
+        "reward_components": {
+            "code_executes": 0.20,
+            "tests_passed": "0.30-0.80",
+            "input_validation": 0.20,
+            "no_magic_numbers": 0.20,
+            "code_quality": 0.20
+        },
+        "attempt_penalty": 0.90,
+        "sandbox": {
+            "timeout_seconds": 5,
+            "blocked_imports": [
+                "os", "sys", "subprocess", "socket",
+                "requests", "importlib", "ctypes"
+            ],
+            "execution": "isolated_namespace"
+        },
+        "baseline_scores": {
+            "easy": 1.000,
+            "medium": 1.000,
+            "medium2": 1.000,
+            "hard": 0.950,
+            "hard2": 1.000,
+            "security": 1.000,
+            "average": 0.992
+        }
+    }
+
 
 @app.get("/tasks")
 def tasks():
@@ -85,7 +126,10 @@ def step(action: Action):
         return result
     except RuntimeError as e:
         raise HTTPException(status_code=400, detail=str(e))
-
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/state", response_model=State)
 def state():
