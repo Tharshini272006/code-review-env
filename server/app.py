@@ -103,6 +103,38 @@ def metrics():
         }
     }
 
+@app.get("/replay")
+def list_replays():
+    """List all completed episodes available for replay."""
+    episodes = env.get_all_episodes()
+    return {
+        "total_episodes": len(episodes),
+        "episodes": episodes
+    }
+
+
+@app.get("/replay/current")
+def current_replay():
+    """Get step-by-step replay of the current episode."""
+    history = env.get_current_replay()
+    return {
+        "episode_id": env._state.episode_id if env._state else None,
+        "task_id": env._state.task_id if env._state else None,
+        "steps": len(history),
+        "history": history
+    }
+
+
+@app.get("/replay/{episode_id}")
+def get_replay(episode_id: str):
+    """Get full step-by-step replay of a completed episode."""
+    replay = env.get_episode_replay(episode_id)
+    if replay is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Episode '{episode_id}' not found. Episodes are stored in memory only."
+        )
+    return replay
 
 @app.get("/tasks")
 def tasks():

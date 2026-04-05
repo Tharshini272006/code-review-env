@@ -1,6 +1,6 @@
 # server/environment.py
 import uuid
-from typing import Optional
+from typing import Optional, List, Dict, Any
 
 from models import Action, Observation, State, StepResult
 from server.tasks import get_task, Task
@@ -13,11 +13,14 @@ class CodeReviewEnvironment:
         self._state: Optional[State] = None
         self._current_obs: Optional[Observation] = None
         self._attempt: int = 0
+        self._episode_history: List[Dict] = []
+        self._all_episodes: Dict[str, List[Dict]] = {}
 
     def reset(self, task_id: str = "easy") -> Observation:
         task = get_task(task_id)
         self._task = task
         self._attempt = 0
+        self._episode_history = []
 
         self._state = State(
             episode_id=str(uuid.uuid4()),
@@ -41,6 +44,19 @@ class CodeReviewEnvironment:
             done=False,
         )
         self._current_obs = obs
+
+        # Store episode start
+        self._episode_history.append({
+            "step": 0,
+            "type": "reset",
+            "task_id": task_id,
+            "buggy_code": task.buggy_code,
+            "action": None,
+            "reward": 0.0,
+            "feedback": obs.feedback,
+            "done": False,
+        })
+
         return obs
 
     def step(self, action: Action) -> StepResult:
@@ -101,9 +117,53 @@ class CodeReviewEnvironment:
             done=done,
         )
         self._current_obs = obs
+
+        # Store step in history
+        self._episode_history.append({
+            "step": self._attempt,
+            "type": "step",
+            "action": action.code[:200],
+            "explanation": action.explanation,
+            "reward": reward,
+            "feedback": feedback,
+            "tests_passed": exec_result["tests_passed"],
+            "total_tests": exec_result["total_tests"],
+            "executes": exec_result["executes"],
+            "done": done,
+        })
+
+        # Save completed episode
+        if done:
+            self._all_episodes[self._state.episode_id] = {
+                "episode_id": self._state.episode_id,
+                "task_id": self._task.task_id,
+                "total_reward": self._state.total_reward,
+                "steps": self._state.step_count,
+                "status": self._state.status,
+                "history": self._episode_history.copy(),
+            }
+
         return StepResult(observation=obs, reward=reward, done=done)
 
     def state(self) -> State:
         if self._state is None:
             raise RuntimeError("Environment not initialized. Call reset() first.")
         return self._state
+
+    def get_episode_replay(self, episode_id: str) -> Optional[Dict]:
+        return self._all_episodes.get(episode_id)
+
+    def get_all_episodes(self) -> List[Dict]:
+        return [
+            {
+                "episode_id": ep["episode_id"],
+                "task_id": ep["task_id"],
+                "total_reward": ep["total_reward"],
+                "steps": ep["steps"],
+                "status": ep["status"],
+            }
+            for ep in self._all_episodes.values()
+        ]
+
+    def get_current_replay(self) -> List[Dict]:
+        return self._episode_history.copy()
