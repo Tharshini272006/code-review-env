@@ -47,10 +47,94 @@ class GraderRequest(BaseModel):
 # ─────────────────────────────────────────────
 # Endpoints
 # ─────────────────────────────────────────────
+@app.get("/")
+def root():
+    return {
+        "name": "CodeReviewEnv",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health",
+        "tasks": "/tasks"
+    }
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
+@app.get("/metrics")
+def metrics():
+    """Environment metrics and statistics."""
+    return {
+        "environment": "code_review_env",
+        "version": "1.0.0",
+        "tasks": {
+            "total": 6,
+            "by_difficulty": {
+                "easy": ["easy"],
+                "medium": ["medium", "medium2"],
+                "hard": ["hard", "hard2", "security"]
+            }
+        },
+        "reward_components": {
+            "code_executes": 0.20,
+            "tests_passed": "0.30-0.80",
+            "input_validation": 0.20,
+            "no_magic_numbers": 0.20,
+            "code_quality": 0.20
+        },
+        "attempt_penalty": 0.90,
+        "sandbox": {
+            "timeout_seconds": 5,
+            "blocked_imports": [
+                "os", "sys", "subprocess", "socket",
+                "requests", "importlib", "ctypes"
+            ],
+            "execution": "isolated_namespace"
+        },
+        "baseline_scores": {
+            "easy": 1.000,
+            "medium": 1.000,
+            "medium2": 1.000,
+            "hard": 0.950,
+            "hard2": 1.000,
+            "security": 1.000,
+            "average": 0.992
+        }
+    }
+
+@app.get("/replay")
+def list_replays():
+    """List all completed episodes available for replay."""
+    episodes = env.get_all_episodes()
+    return {
+        "total_episodes": len(episodes),
+        "episodes": episodes
+    }
+
+
+@app.get("/replay/current")
+def current_replay():
+    """Get step-by-step replay of the current episode."""
+    history = env.get_current_replay()
+    return {
+        "episode_id": env._state.episode_id if env._state else None,
+        "task_id": env._state.task_id if env._state else None,
+        "steps": len(history),
+        "history": history
+    }
+
+
+@app.get("/replay/{episode_id}")
+def get_replay(episode_id: str):
+    """Get full step-by-step replay of a completed episode."""
+    replay = env.get_episode_replay(episode_id)
+    if replay is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Episode '{episode_id}' not found. Episodes are stored in memory only."
+        )
+    return replay
 
 @app.get("/tasks")
 def tasks():
@@ -58,9 +142,10 @@ def tasks():
 
 
 @app.post("/reset", response_model=Observation)
-def reset(req: ResetRequest):
+def reset(req: Optional[ResetRequest] = None):
     try:
-        obs = env.reset(task_id=req.task_id)
+        task_id = req.task_id if req else "easy"
+        obs = env.reset(task_id=task_id)
         return obs
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -73,7 +158,10 @@ def step(action: Action):
         return result
     except RuntimeError as e:
         raise HTTPException(status_code=400, detail=str(e))
-
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/state", response_model=State)
 def state():
@@ -103,3 +191,9 @@ def grader(req: GraderRequest):
         "exec_error": result["exec_result"]["exec_error"],
         "quality": result["quality"],
     }
+def main():
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+if __name__ == "__main__":
+    main()

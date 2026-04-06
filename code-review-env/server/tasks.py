@@ -149,14 +149,131 @@ def sieve_of_eratosthenes(n):
     ),
     tags=["sieve", "refactor", "validation", "hard"],
 )
+# ─────────────────────────────────────────────
+# TASK 4 — medium2 — string_fix
+# Bug: wrong slice step in string reversal
+# ─────────────────────────────────────────────
+TASK_MEDIUM2 = Task(
+    task_id="medium2",
+    name="string_fix",
+    description=(
+        "Fix the Python function below. It is supposed to reverse a string "
+        "but returns wrong output due to a logical bug. "
+        "You have up to 3 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def reverse_string(s):
+    """Return the reverse of a string."""
+    return s[::1]   # BUG: step should be -1, not 1
+''',
+    function_name="reverse_string",
+    max_attempts=3,
+    test_cases=[
+        TestCase(args=["hello"], kwargs={}, expected="olleh",
+                 description="reverse 'hello'"),
+        TestCase(args=[""], kwargs={}, expected="",
+                 description="empty string"),
+        TestCase(args=["a"], kwargs={}, expected="a",
+                 description="single character"),
+        TestCase(args=["abcde"], kwargs={}, expected="edcba",
+                 description="reverse 'abcde'"),
+        TestCase(args=["racecar"], kwargs={}, expected="racecar",
+                 description="palindrome"),
+    ],
+    hint="Check the slice step value — what does s[::1] do vs s[::-1]?",
+    tags=["string", "slice", "medium"],
+)
+
+# ─────────────────────────────────────────────
+# TASK 5 — hard2 — binary_search_fix
+# Bug: off-by-one + no validation + magic numbers
+# ─────────────────────────────────────────────
+TASK_HARD2 = Task(
+    task_id="hard2",
+    name="binary_search_fix",
+    description=(
+        "Fix the Python function below. It is supposed to perform binary search "
+        "and return the index of target in a sorted list, or -1 if not found. "
+        "It has a bug AND poor code quality. "
+        "Fix the bug AND add input validation. "
+        "You have up to 5 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def binary_search(arr, target):
+    """Return index of target in sorted arr, or -1 if not found."""
+    left, right = 0, len(arr)    # BUG: should be len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+''',
+    function_name="binary_search",
+    max_attempts=5,
+    test_cases=[
+        TestCase(args=["alice"], kwargs={}, expected="alice",
+                 description="normal input unchanged"),
+        TestCase(args=["alice'"], kwargs={}, expected="alice",
+                 description="single quote removed"),
+        TestCase(args=["alice;"], kwargs={}, expected="alice",
+                 description="semicolon removed"),
+        TestCase(args=[None], kwargs={}, expected="",
+                 description="None returns empty string"),
+        TestCase(args=["test--"], kwargs={}, expected="test",
+                 description="SQL comment marker removed"),
+    ],
+    hint="Check the initial value of right — should it be len(arr) or len(arr)-1?",
+    tags=["binary-search", "off-by-one", "hard"],
+)
+TASK_SECURITY = Task(
+    task_id="security",
+    name="security_fix",
+    description=(
+        "The function below is supposed to sanitize user input by removing "
+        "dangerous SQL characters, but it has a bug — it only removes single quotes "
+        "but misses other dangerous characters like semicolons and comments (--). "
+        "Fix it to properly sanitize ALL dangerous SQL characters and handle None input. "
+        "You have up to 3 attempts with feedback after each."
+    ),
+    buggy_code='''\
+def sanitize_input(user_input):
+    """Remove dangerous SQL characters from user input."""
+    if user_input is None:
+        return ""
+    return user_input.replace("\'", "")   # BUG: misses ; -- and other chars
+''',
+    function_name="sanitize_input",
+    max_attempts=3,
+    test_cases=[
+        TestCase(args=["alice"], kwargs={}, expected="alice",
+                 description="normal input unchanged"),
+        TestCase(args=["alice'bobby"], kwargs={}, expected="alicebobby",
+                 description="single quote removed"),
+        TestCase(args=["alice;bobby"], kwargs={}, expected="alicebobby",
+                 description="semicolon removed"),
+        TestCase(args=[None], kwargs={}, expected="",
+                 description="None returns empty string"),
+        TestCase(args=["alice--bobby"], kwargs={}, expected="alicebobby",
+                 description="SQL comment removed"),
+    ],
+    hint="Remove all of: single quotes ('), semicolons (;), and SQL comments (--).",
+    tags=["security", "sanitization", "sql", "hard"],
+)
 
 # ─────────────────────────────────────────────
 # Registry
 # ─────────────────────────────────────────────
 TASKS: Dict[str, Task] = {
-    "easy":   TASK_EASY,
-    "medium": TASK_MEDIUM,
-    "hard":   TASK_HARD,
+    "easy":     TASK_EASY,
+    "medium":   TASK_MEDIUM,
+    "hard":     TASK_HARD,
+    "medium2":  TASK_MEDIUM2,
+    "hard2":    TASK_HARD2,
+    "security": TASK_SECURITY,
 }
 
 

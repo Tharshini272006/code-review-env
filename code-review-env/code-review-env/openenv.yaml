@@ -1,0 +1,94 @@
+# openenv.yaml
+name: code-review-env
+version: "1.0.0"
+description: "RL environment where an AI agent identifies and fixes deliberate Python bugs, earning partial rewards for each passing test and code quality improvement."
+author: "solo-submission"
+
+tasks:
+  - id: easy
+    name: syntax_fix
+    description: "Fix a Python function with a divide-by-zero bug caused by missing empty-list guard."
+    max_steps: 1
+    tags: [syntax, guard-clause, easy]
+
+  - id: medium
+    name: logic_fix
+    description: "Fix a Python function computing Fibonacci numbers — wrong initial values cause incorrect output. Up to 3 attempts with execution feedback."
+    max_steps: 3
+    tags: [logic, fibonacci, medium]
+
+  - id: hard
+    name: refactor_and_fix
+    description: "Fix a Sieve of Eratosthenes function that uses a hardcoded magic number AND has a bug in array sizing. Also add input validation. Up to 5 attempts."
+    max_steps: 5
+    tags: [refactor, sieve, validation, hard]
+
+action_space:
+  code:
+    type: string
+    description: "The complete corrected Python function."
+  explanation:
+    type: string
+    required: false
+    description: "Optional explanation of what the agent changed and why."
+
+observation_space:
+  buggy_code:
+    type: string
+    description: "The original buggy Python function the agent must fix."
+  task_description:
+    type: string
+    description: "Natural language description of the task."
+  task_id:
+    type: string
+    enum: [easy, medium, hard]
+  attempt_number:
+    type: integer
+    description: "Current attempt number (1-based, 0 at episode start)."
+  max_attempts:
+    type: integer
+  last_execution_output:
+    type: string
+    description: "stdout captured from the last code execution."
+  feedback:
+    type: string
+    description: "Grader feedback: which tests passed/failed and why."
+  hint:
+    type: string
+    required: false
+  reward:
+    type: float
+    description: "Reward earned on the most recent step."
+  done:
+    type: boolean
+
+reward_structure:
+  components:
+    - name: code_executes
+      weight: 0.20
+    - name: tests_passed
+      weight: 0.30-0.80
+      note: "Proportional to fraction of tests passing; weight varies by task."
+    - name: input_validation
+      weight: 0.20
+      tasks: [hard]
+    - name: no_magic_numbers
+      weight: 0.20
+      tasks: [hard]
+    - name: code_quality
+      weight: 0.20
+      tasks: [hard]
+  attempt_penalty: 0.90
+  range: [0.0, 1.0]
+
+server:
+  port: 7860
+  framework: fastapi
+  endpoints:
+    - POST /reset
+    - POST /step
+    - GET  /state
+    - GET  /tasks
+    - POST /grader
+    - GET  /health
+    - GET  /docs
