@@ -151,12 +151,59 @@ def sieve_of_eratosthenes(n):
 )
 
 # ─────────────────────────────────────────────
+# TASK 7 — multi_bug_fix (ultra hard)
+# Bugs: wrong formula + no validation + wrong return type
+# ─────────────────────────────────────────────
+TASK_MULTI = Task(
+    task_id="multi",
+    name="multi_bug_fix",
+    description=(
+        "The function below calculates a discounted price but has MULTIPLE bugs: "
+        "1) Wrong discount formula, "
+        "2) No validation for negative price or discount, "
+        "3) Returns wrong type for zero discount. "
+        "Fix ALL bugs and add proper input validation. "
+        "You have up to 5 attempts with detailed feedback after each."
+    ),
+    buggy_code='''\
+def calculate_discount(price, discount_pct):
+    """Calculate final price after applying discount percentage."""
+    result = price * discount_pct    # BUG 1: wrong formula
+    return result                    # BUG 2: no validation, BUG 3: wrong type
+''',
+    function_name="calculate_discount",
+    max_attempts=5,
+    test_cases=[
+        TestCase(args=[100, 20], kwargs={}, expected=80.0,
+                 description="100 with 20% discount = 80.0"),
+        TestCase(args=[200, 50], kwargs={}, expected=100.0,
+                 description="200 with 50% discount = 100.0"),
+        TestCase(args=[100, 0], kwargs={}, expected=100.0,
+                 description="0% discount returns original price"),
+        TestCase(args=[50, 10], kwargs={}, expected=45.0,
+                 description="50 with 10% discount = 45.0"),
+        TestCase(args=[100, 100], kwargs={}, expected=0.0,
+                 description="100% discount = 0.0"),
+    ],
+    hint=(
+        "Formula should be: price * (1 - discount_pct / 100). "
+        "Validate: price >= 0, 0 <= discount_pct <= 100. "
+        "Always return float."
+    ),
+    tags=["multi-bug", "formula", "validation", "ultra-hard"],
+)
+
+# ─────────────────────────────────────────────
 # Registry
 # ─────────────────────────────────────────────
 TASKS: Dict[str, Task] = {
-    "easy":   TASK_EASY,
-    "medium": TASK_MEDIUM,
-    "hard":   TASK_HARD,
+    "easy":     TASK_EASY,
+    "medium":   TASK_MEDIUM,
+    "hard":     TASK_HARD,
+    "medium2":  TASK_MEDIUM2,
+    "hard2":    TASK_HARD2,
+    "security": TASK_SECURITY,
+    "multi":    TASK_MULTI,
 }
 
 

@@ -294,3 +294,73 @@ def list_tasks() -> List[Dict]:
         }
         for t in TASKS.values()
     ]
+# ---------------------------------------------
+# TASK 7 — multi_bug_fix (ultra hard)
+# ---------------------------------------------
+TASK_MULTI = Task(
+    task_id="multi",
+    name="multi_bug_fix",
+    description=(
+        "The function below calculates a discounted price but has MULTIPLE bugs: "
+        "1) Wrong discount formula, "
+        "2) No validation for negative price or discount, "
+        "3) Returns wrong type for zero discount. "
+        "Fix ALL bugs and add proper input validation. "
+        "You have up to 5 attempts with detailed feedback after each."
+    ),
+    buggy_code='''\
+def calculate_discount(price, discount_pct):
+    """Calculate final price after applying discount percentage."""
+    result = price * discount_pct
+    return result
+''',
+    function_name="calculate_discount",
+    max_attempts=5,
+    test_cases=[
+        TestCase(args=[100, 20], kwargs={}, expected=80.0,
+                 description="100 with 20% discount = 80.0"),
+        TestCase(args=[200, 50], kwargs={}, expected=100.0,
+                 description="200 with 50% discount = 100.0"),
+        TestCase(args=[100, 0], kwargs={}, expected=100.0,
+                 description="0% discount returns original price"),
+        TestCase(args=[50, 10], kwargs={}, expected=45.0,
+                 description="50 with 10% discount = 45.0"),
+        TestCase(args=[100, 100], kwargs={}, expected=0.0,
+                 description="100% discount = 0.0"),
+    ],
+    hint=(
+        "Formula should be: price * (1 - discount_pct / 100). "
+        "Validate: price >= 0, 0 <= discount_pct <= 100. "
+        "Always return float."
+    ),
+    tags=["multi-bug", "formula", "validation", "ultra-hard"],
+)
+
+TASKS = {
+    "easy":     TASK_EASY,
+    "medium":   TASK_MEDIUM,
+    "hard":     TASK_HARD,
+    "medium2":  TASK_MEDIUM2,
+    "hard2":    TASK_HARD2,
+    "security": TASK_SECURITY,
+    "multi":    TASK_MULTI,
+}
+
+
+def get_task(task_id: str):
+    if task_id not in TASKS:
+        raise ValueError(f"Unknown task_id '{task_id}'. Choose from: {list(TASKS.keys())}")
+    return TASKS[task_id]
+
+
+def list_tasks():
+    return [
+        {
+            "task_id":      t.task_id,
+            "name":         t.name,
+            "description":  t.description,
+            "max_attempts": t.max_attempts,
+            "tags":         t.tags,
+        }
+        for t in TASKS.values()
+    ]

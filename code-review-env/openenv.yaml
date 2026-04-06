@@ -23,6 +23,11 @@ tasks:
     max_steps: 5
     tags: [refactor, sieve, validation, hard]
 
+  - id: multi
+    name: multi_bug_fix
+    description: "Fix multiple bugs in a discount calculator — wrong formula, no validation, wrong return type"
+    max_steps: 5
+
 action_space:
   code:
     type: string
