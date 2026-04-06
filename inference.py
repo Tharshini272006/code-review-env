@@ -60,7 +60,7 @@ def log_end(success: bool, steps: int, score: float, rewards: List[float]):
 SYSTEM_PROMPT = """\
 You are an expert Python engineer. You will be given a buggy Python function.
 Your task is to identify the bug and return ONLY the complete corrected function.
-Do NOT include any explanation, markdown, or extra text Ã¢â‚¬â€ ONLY the raw Python code.
+Do NOT include any explanation, markdown, or extra text ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ONLY the raw Python code.
 The function must be syntactically valid and self-contained.
 """
 
@@ -155,7 +155,7 @@ def run_task(task_id: str) -> dict:
 
 
 def main():
-    task_ids = ["easy", "medium", "medium2", "hard", "hard2", "security"]
+    task_ids = ["easy", "medium", "medium2", "hard", "hard2", "security", "multi"]
     for task_id in task_ids:
         try:
             run_task(task_id)
