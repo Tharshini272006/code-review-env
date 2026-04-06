@@ -190,7 +190,7 @@ def grade(task: Task, submitted_code: str, attempt_number: int = 1) -> Dict:
             reward, breakdown = compute_reward_easy(exec_result, attempt_number)
         elif task.task_id in ("medium", "medium2"):
             reward, breakdown = compute_reward_medium(exec_result, attempt_number)
-        elif task.task_id in ("hard", "hard2", "security"):
+        elif task.task_id in ("hard", "hard2", "security", "multi"):
             quality = check_code_quality(submitted_code)
             reward, breakdown = compute_reward_hard(exec_result, quality, attempt_number)
         else:
