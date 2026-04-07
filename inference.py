@@ -1,9 +1,7 @@
-# inference.py
 import os
-import sys
-from typing import List, Optional
-import requests
+import httpx
 from openai import OpenAI
+from typing import List, Optional
 
 API_KEY = os.getenv("HF_TOKEN") or os.getenv("API_KEY", "")
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
@@ -11,19 +9,17 @@ MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
 SERVER_URL = os.getenv("SERVER_URL", "http://localhost:7860")
 
 client_llm = OpenAI(api_key=API_KEY, base_url=API_BASE_URL)
-
-_session = requests.Session()
-_session.headers.update({"Content-Type": "application/json"})
+_client = httpx.Client(headers={"Content-Type": "application/json"}, timeout=30)
 
 
 def _post(path: str, payload: dict) -> dict:
-    r = _session.post(f"{SERVER_URL}{path}", json=payload, timeout=30)
+    r = _client.post(f"{SERVER_URL}{path}", json=payload)
     r.raise_for_status()
     return r.json()
 
 
 def _get(path: str) -> dict:
-    r = _session.get(f"{SERVER_URL}{path}", timeout=10)
+    r = _client.get(f"{SERVER_URL}{path}")
     r.raise_for_status()
     return r.json()
 
@@ -60,7 +56,7 @@ def log_end(success: bool, steps: int, score: float, rewards: List[float]):
 SYSTEM_PROMPT = """\
 You are an expert Python engineer. You will be given a buggy Python function.
 Your task is to identify the bug and return ONLY the complete corrected function.
-Do NOT include any explanation, markdown, or extra text ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ONLY the raw Python code.
+Do NOT include any explanation, markdown, or extra text — ONLY the raw Python code.
 The function must be syntactically valid and self-contained.
 """
 
@@ -146,8 +142,7 @@ def run_task(task_id: str) -> dict:
             success = bool(rewards) and rewards[-1] > 0.8
 
     except Exception as e:
-        error_str = str(e)
-        log_step(steps + 1, "", 0.0, True, error_str)
+        log_step(steps + 1, "", 0.0, True, str(e))
     finally:
         log_end(success, steps, score, rewards)
 
@@ -155,7 +150,7 @@ def run_task(task_id: str) -> dict:
 
 
 def main():
-    task_ids = ["easy", "medium", "medium2", "hard", "hard2", "security", "multi"]
+    task_ids = ["easy", "medium", "hard"]
     for task_id in task_ids:
         try:
             run_task(task_id)
