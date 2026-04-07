@@ -1,7 +1,25 @@
 # inference.py
 import os
 import sys
+import subprocess
+
+def _install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package, "-q"])
+
+try:
+    import requests
+except ImportError:
+    _install("requests")
+    import requests
+
+try:
+    from openai import OpenAI
+except ImportError:
+    _install("openai")
+    from openai import OpenAI
+
 from typing import List, Optional
+
 import requests
 from openai import OpenAI
 
@@ -60,7 +78,7 @@ def log_end(success: bool, steps: int, score: float, rewards: List[float]):
 SYSTEM_PROMPT = """\
 You are an expert Python engineer. You will be given a buggy Python function.
 Your task is to identify the bug and return ONLY the complete corrected function.
-Do NOT include any explanation, markdown, or extra text ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â ONLY the raw Python code.
+Do NOT include any explanation, markdown, or extra text ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ONLY the raw Python code.
 The function must be syntactically valid and self-contained.
 """
 
