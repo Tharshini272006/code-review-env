@@ -1,4 +1,0 @@
-# Root requirements — for inference.py and client.py
-openai>=1.30.0
-requests>=2.31.0
-pydantic>=2.7.1
