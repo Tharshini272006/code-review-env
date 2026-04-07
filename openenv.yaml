@@ -23,6 +23,11 @@ tasks:
     max_steps: 5
     tags: [refactor, sieve, validation, hard]
 
+  - id: multi
+    name: multi_bug_fix
+    description: "Fix multiple bugs in a discount calculator — wrong formula, no validation, wrong return type"
+    max_steps: 5
+
 action_space:
   code:
     type: string
@@ -78,10 +83,6 @@ reward_structure:
     - name: code_quality
       weight: 0.20
       tasks: [hard]
-    - id: security
-      name: security_fix
-      description: "Fix SQL injection vulnerability and add input sanitization"
-      max_steps: 3
   attempt_penalty: 0.90
   range: [0.0, 1.0]
 
