@@ -4,7 +4,7 @@ import sys
 import io
 import builtins
 from typing import Any, Dict, List, Optional, Tuple
-from server.tasks import Task, TestCase
+from tasks import Task, TestCase
 
 BLOCKED_IMPORTS = {
     "os", "sys", "subprocess", "shutil", "pathlib",
@@ -106,7 +106,7 @@ def check_code_quality(code: str) -> Dict:
         if isinstance(node, ast.If):
             has_validation = True
         if isinstance(node, ast.Constant) and isinstance(node.value, int):
-            if node.value > 2:
+            if node.value > 9:
                 no_magic = False
     score = (0.35 if has_validation else 0.0) + (0.40 if no_magic else 0.0) + (0.25 if has_docstring else 0.0)
     return {"has_input_validation": has_validation, "no_magic_numbers": no_magic,
@@ -131,8 +131,8 @@ def compute_reward_easy(exec_result: Dict, attempt_number: int = 1) -> Tuple[flo
     test_reward = (passed / n) * 0.80 if n > 0 else 0.0
     reward += test_reward
     breakdown.append(f"tests {passed}/{n}(+{test_reward:.2f})")
-    reward = min(1.0, reward) * _attempt_multiplier(attempt_number)
-    return round(min(1.0, reward), 4), " | ".join(breakdown)
+    reward = min(0.999, reward) * _attempt_multiplier(attempt_number)
+    return round(max(0.001, min(0.999, reward)), 4), " | ".join(breakdown)
 
 def compute_reward_medium(exec_result: Dict, attempt_number: int = 1) -> Tuple[float, str]:
     reward = 0.0
@@ -153,8 +153,8 @@ def compute_reward_medium(exec_result: Dict, attempt_number: int = 1) -> Tuple[f
     reward += basic_reward + edge_reward
     breakdown.append(f"basic {basic_passed}/{len(basic)}(+{basic_reward:.2f})")
     breakdown.append(f"edge {edge_passed}/{len(edge)}(+{edge_reward:.2f})")
-    reward = min(1.0, reward) * _attempt_multiplier(attempt_number)
-    return round(min(1.0, reward), 4), " | ".join(breakdown)
+    reward = min(0.999, reward) * _attempt_multiplier(attempt_number)
+    return round(max(0.001, min(0.999, reward)), 4), " | ".join(breakdown)
 
 def compute_reward_hard(exec_result: Dict, quality: Dict, attempt_number: int = 1) -> Tuple[float, str]:
     reward = 0.0
@@ -179,9 +179,8 @@ def compute_reward_hard(exec_result: Dict, quality: Dict, attempt_number: int = 
     quality_score = quality.get("quality_score", 0.0) * 0.20
     reward += quality_score
     breakdown.append(f"quality(+{quality_score:.2f})")
-    reward = min(1.0, reward) * _attempt_multiplier(attempt_number)
-    return round(min(1.0, reward), 4), " | ".join(breakdown)
-
+    reward = min(0.999, reward) * _attempt_multiplier(attempt_number)
+    return round(max(0.001, min(0.999, reward)), 4), " | ".join(breakdown)
 def grade(task: Task, submitted_code: str, attempt_number: int = 1) -> Dict:
     try:
         exec_result = execute_code(submitted_code, task.function_name, task.test_cases)

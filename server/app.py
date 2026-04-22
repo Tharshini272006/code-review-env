@@ -10,9 +10,9 @@ from pydantic import BaseModel
 from typing import Optional
 
 from models import Action, Observation, State, StepResult
-from server.environment import CodeReviewEnvironment
-from server.tasks import list_tasks, get_task
-from server.grader import grade
+from environment import CodeReviewEnvironment
+from tasks import list_tasks, get_task
+from grader import grade
 
 app = FastAPI(
     title="CodeReviewEnv",

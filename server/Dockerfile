@@ -1,25 +1,18 @@
-# server/Dockerfile
 FROM python:3.11-slim
-
-# System deps
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Install Python deps first (layer cache)
-COPY server/requirements.txt ./server/requirements.txt
-RUN pip install --no-cache-dir -r server/requirements.txt
+COPY server/requirements.txt ./server_requirements.txt
+COPY requirements.txt .
 
-# Copy full project
+RUN pip install --no-cache-dir -r requirements.txt -r server_requirements.txt
+
 COPY . .
 
-# HF Spaces: non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser /app
-USER appuser
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
 EXPOSE 7860
 
-# Start server — note the module path uses the package structure
-CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "1"]
+CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "7860"]

@@ -3,8 +3,8 @@ import uuid
 from typing import Optional, List, Dict, Any
 
 from models import Action, Observation, State, StepResult
-from server.tasks import get_task, Task
-from server.grader import grade
+from tasks import get_task, Task
+from grader import grade
 
 
 class CodeReviewEnvironment:
