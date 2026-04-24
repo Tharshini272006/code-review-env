@@ -1,0 +1,663 @@
+{
+  "current_difficulty": "hard",
+  "win_streak": 0,
+  "lose_streak": 0,
+  "episode_count": 25,
+  "rewards_easy": [],
+  "rewards_medium": [],
+  "rewards_hard": [
+    0.30890655419956725,
+    0.15452759471775446,
+    0.2644295637871973,
+    0.41765818902800866,
+    0.2622594372287275,
+    0.3619756542789956,
+    0.4897821366021975,
+    0.5761588543756285,
+    0.47232379748281417,
+    0.532807150671114,
+    0.4761312049093529,
+    0.7087278095542064,
+    0.6272129696681136,
+    0.6607086354240527,
+    0.772445702025389,
+    0.8095366984109915,
+    0.8765309489271649,
+    0.7491804535506645,
+    0.8846229537775461,
+    0.7999636563056375,
+    0.11843501707309356,
+    0.16320813393529138,
+    0.23090501090431367,
+    0.26072674236948873,
+    0.41899247975269593
+  ],
+  "rewards_extreme": [],
+  "reward_history": [
+    {
+      "episode": 1,
+      "reward": 0.5461347975120046,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 2,
+      "reward": 0.5917500646719921,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 3,
+      "reward": 0.6970014504965321,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 4,
+      "reward": 0.7379209282150216,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 5,
+      "reward": 0.6357893722645998,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 6,
+      "reward": 0.6571191979438156,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 7,
+      "reward": 0.838765988658271,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 8,
+      "reward": 0.7043891654832988,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 9,
+      "reward": 0.7199123063601907,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 10,
+      "reward": 0.9078053004433877,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 11,
+      "reward": 0.8946428600353522,
+      "difficulty": "easy"
+    },
+    {
+      "episode": 12,
+      "reward": 0.7652251158859738,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 13,
+      "reward": 0.8309718153088556,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 14,
+      "reward": 0.8083109093854643,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 15,
+      "reward": 0.8343432705671276,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 16,
+      "reward": 0.9114169589230566,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 17,
+      "reward": 1.0,
+      "difficulty": "medium"
+    },
+    {
+      "episode": 18,
+      "reward": 0.8505373513349425,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 19,
+      "reward": 0.900226871694934,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 20,
+      "reward": 0.8907005783845925,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 21,
+      "reward": 0.895124191609785,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 22,
+      "reward": 0.8870094017780903,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 23,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 24,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 25,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 26,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 27,
+      "reward": 0.9682423232391006,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 28,
+      "reward": 0.9970549055064323,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 29,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 30,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 31,
+      "reward": 0.9002573239096244,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 32,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 33,
+      "reward": 0.9813237441256598,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 34,
+      "reward": 0.8603087862978233,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 35,
+      "reward": 0.9459698614552267,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 36,
+      "reward": 0.8875649082325145,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 37,
+      "reward": 0.8673586887653932,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 38,
+      "reward": 0.9664903031243166,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 39,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 40,
+      "reward": 0.9801213470436542,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 41,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 42,
+      "reward": 0.9276554351330947,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 43,
+      "reward": 0.9228644720626842,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 44,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 45,
+      "reward": 0.9651737005521472,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 46,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 47,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 48,
+      "reward": 0.9373233497372792,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 49,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 50,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 51,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 52,
+      "reward": 0.8846826394972521,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 53,
+      "reward": 0.9446856962066723,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 54,
+      "reward": 0.9324688587839839,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 55,
+      "reward": 0.8998153728587154,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 56,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 57,
+      "reward": 0.8988119084304724,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 58,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 59,
+      "reward": 0.9176545524466807,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 60,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 61,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 62,
+      "reward": 0.8650906852150673,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 63,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 64,
+      "reward": 0.9127815728419052,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 65,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 66,
+      "reward": 0.9730363662766451,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 67,
+      "reward": 0.9642093805078769,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 68,
+      "reward": 0.9023352695214819,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 69,
+      "reward": 0.9889327993009877,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 70,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 71,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 72,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 73,
+      "reward": 0.9610174295650871,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 74,
+      "reward": 0.9018497664070121,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 75,
+      "reward": 0.8922534713172859,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 76,
+      "reward": 0.9067328952055093,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 77,
+      "reward": 0.9911565647169478,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 78,
+      "reward": 0.9529317564423053,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 79,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 80,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 81,
+      "reward": 0.9629513525994425,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 82,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 83,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 84,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 85,
+      "reward": 0.9607051442340707,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 86,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 87,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 88,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 89,
+      "reward": 0.9411359413736564,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 90,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 91,
+      "reward": 0.9706668439080194,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 92,
+      "reward": 0.9677821211047763,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 93,
+      "reward": 0.9170351251108657,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 94,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 95,
+      "reward": 0.8887409379419824,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 96,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 97,
+      "reward": 0.96587426301482,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 98,
+      "reward": 0.8736788168688019,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 99,
+      "reward": 1.0,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 100,
+      "reward": 0.9184186922287955,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 1,
+      "reward": 0.3089,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 2,
+      "reward": 0.1545,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 3,
+      "reward": 0.2644,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 4,
+      "reward": 0.4177,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 5,
+      "reward": 0.2623,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 6,
+      "reward": 0.362,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 7,
+      "reward": 0.4898,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 8,
+      "reward": 0.5762,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 9,
+      "reward": 0.4723,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 10,
+      "reward": 0.5328,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 11,
+      "reward": 0.4761,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 12,
+      "reward": 0.7087,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 13,
+      "reward": 0.6272,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 14,
+      "reward": 0.6607,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 15,
+      "reward": 0.7724,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 16,
+      "reward": 0.8095,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 17,
+      "reward": 0.8765,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 18,
+      "reward": 0.7492,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 19,
+      "reward": 0.8846,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 20,
+      "reward": 0.8,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 21,
+      "reward": 0.1184,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 22,
+      "reward": 0.1632,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 23,
+      "reward": 0.2309,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 24,
+      "reward": 0.2607,
+      "difficulty": "hard"
+    },
+    {
+      "episode": 25,
+      "reward": 0.419,
+      "difficulty": "hard"
+    }
+  ]
+}

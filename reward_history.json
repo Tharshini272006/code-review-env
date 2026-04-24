@@ -1,0 +1,322 @@
+[
+  {
+    "episode": 1,
+    "reward": 0.999,
+    "difficulty": "easy",
+    "function": "calculate_average",
+    "bug_type": "off_by_one",
+    "action": "stay"
+  },
+  {
+    "episode": 2,
+    "reward": 0.999,
+    "difficulty": "easy",
+    "function": "average",
+    "bug_type": "off_by_one",
+    "action": "escalate"
+  },
+  {
+    "episode": 3,
+    "reward": 0.999,
+    "difficulty": "medium",
+    "function": "find_second_largest",
+    "bug_type": "off_by_one",
+    "action": "escalate"
+  },
+  {
+    "episode": 4,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 5,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 6,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 7,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 8,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 9,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 10,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 11,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 12,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 13,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 14,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 15,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 16,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 17,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 18,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "edge_case",
+    "action": "mastered"
+  },
+  {
+    "episode": 19,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 20,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 21,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "stay"
+  },
+  {
+    "episode": 22,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 23,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 24,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 25,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 26,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 27,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 28,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 29,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 30,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 31,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 32,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 33,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 34,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 35,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 36,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "find_longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 37,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 38,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "off_by_one",
+    "action": "mastered"
+  },
+  {
+    "episode": 39,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  },
+  {
+    "episode": 40,
+    "reward": 0.999,
+    "difficulty": "hard",
+    "function": "longest_increasing_subsequence",
+    "bug_type": "logic_error",
+    "action": "mastered"
+  }
+]
